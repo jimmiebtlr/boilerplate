@@ -8,17 +8,16 @@ const containerStyle = {
   marginBottom: '12px',
 };
 
-class Container extends React.Component {
-  render() {
-    const { style } = this.props;
+const Container = ({ style, children }) => {
+  const s = style.slice(0);
+  s.push(containerStyle);
 
-    style.push(containerStyle);
-
-    return (<div className="container" style={style}>
-      { this.props.children }
-    </div>);
-  }
-}
+  return (
+    <div className="container" style={s}>
+      {children}
+    </div>
+  );
+};
 
 Container.defaultProps = {
   style: [],
@@ -26,7 +25,7 @@ Container.defaultProps = {
 
 Container.propTypes = {
   style: React.PropTypes.array,
-  children: React.PropTypes.object.isRequired,
+  children: React.PropTypes.node.isRequired,
 };
 
 export default Radium(Container);
