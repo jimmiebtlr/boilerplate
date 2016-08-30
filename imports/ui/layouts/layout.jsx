@@ -1,43 +1,49 @@
-import React from 'react';
-import { List, ListItem } from 'material-ui/List';
+import React, { PropTypes } from 'react';
 import AppBar from 'material-ui/AppBar';
 import Snackbar from '/imports/ui/components/snackbar';
-import { layoutHOC, actions } from 'react-ui-skeleton';
-import store from '/imports/store';
+import store from '../../store';
+import actions from '../../actions/menu';
+import Menu from '../components/menu.wd';
+import Container from '../components/lib/container';
+import Radium from 'radium';
+const Style = {
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100vh',
+    width: '100vw',
+    overflow: 'hidden',
+  },
+  header: {
+    flexGrow: 0,
+    flexShrink: 0,
+  },
+  content: {
+    flexGrow: 1,
+    flexShrink: 1,
+    position: 'relative',
+  },
+};
 
-const Menu = () => (
-  <div>
-    <AppBar
-      title="Meteor templates"
-      iconClassNameLeft=""
-    />
-    <List>
-      <ListItem
-        primaryText="Home"
+const Layout = ({ children }) => (
+  <div style={Style.root}>
+    <div style={Style.header}>
+      <AppBar
+        title="Meteor templates"
+        onLeftIconButtonTouchTap={() => store.dispatch(actions.openNavDrawer())}
       />
-      <ListItem
-        primaryText="Home"
-      />
-      <ListItem
-        primaryText="Home"
-      />
-      <ListItem
-        primaryText="Home"
-      />
-    </List>
+    </div>
+
+    <Menu />
+    <Container style={Style.content}>
+      <Snackbar />
+      {children}
+    </Container>
   </div>
 );
 
-const Layout = layoutHOC({
-  store,
-  menu: <Menu />,
-  snackbar: <Snackbar />,
-  header: (
-    <AppBar
-      title="Meteor templates"
-      onLeftIconButtonTouchTap={() => store.dispatch(actions.openNavDrawer())}
-    />
-  ),
-});
+Layout.propTypes = {
+  children: PropTypes.node,
+};
 
-export default Layout;
+export default Radium(Layout);

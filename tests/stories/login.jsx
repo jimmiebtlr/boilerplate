@@ -1,5 +1,5 @@
 import React from 'react';
-import { storiesOf } from '@kadira/storybook';
+import { storiesOf, action } from '@kadira/storybook';
 import Login from '../../imports/ui/components/login.jsx';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -9,6 +9,6 @@ const muiTheme = getMuiTheme({});
 storiesOf('Login', module)
   .add('with text', () => (
     <MuiThemeProvider muiTheme={muiTheme}>
-      <Login />
+      <Login handleFacebookLogin={action('Login with facebook triggered')} />
     </MuiThemeProvider>
   ));
